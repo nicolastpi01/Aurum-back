@@ -9,6 +9,7 @@ El MVP se considera **completo** cuando todos los issues listados en este docume
 ## 🎯 Objetivo del MVP
 
 Permitir que un usuario:
+
 - se registre y autentique,
 - tenga cuentas bancarias,
 - consulte saldos y movimientos,
@@ -41,6 +42,7 @@ Permitir que un usuario:
 ## 📋 Issues que componen el MVP
 
 ### Backend
+
 - [ ] Registro de usuario
 - [ ] Login JWT
 - [ ] Modelo de cuentas
@@ -50,6 +52,7 @@ Permitir que un usuario:
 - [ ] Listado de movimientos
 
 ### Frontend
+
 - [ ] Login
 - [ ] Dashboard
 - [ ] Transferencias
@@ -59,13 +62,15 @@ Permitir que un usuario:
 ## ✅ Definition of Done (MVP)
 
 Un issue se considera DONE cuando:
+
 - Cumple criterios funcionales
-- Incluye tests según su tipo
+- Incluye tests según su tipo (test de unidad varios, 1 test de integración caso uso critico, 1 test de integración caso de uso que rompe)
 - No rompe otros módulos
 - Pasa build y tests
 
 ---
 
 ## 🟢 Estado del MVP
+
 - Estado actual: **IN PROGRESS**
 - Fecha estimada de cierre: _(a definir)_
