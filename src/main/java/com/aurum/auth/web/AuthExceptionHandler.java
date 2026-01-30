@@ -1,8 +1,10 @@
-package com.aurum.auth;
+package com.aurum.auth.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.aurum.auth.exception.InvalidCredentialsException;
 
 @RestControllerAdvice
 public class AuthExceptionHandler {

@@ -1,8 +1,12 @@
-package com.aurum.auth;
+package com.aurum.auth.web;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.aurum.auth.application.AuthService;
+import com.aurum.auth.dto.LoginRequest;
+import com.aurum.auth.dto.LoginResponse;
 
 @RestController
 @RequestMapping("/api/v1/auth")

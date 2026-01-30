@@ -1,16 +1,15 @@
 package com.aurum.api.auth;
 
-import com.aurum.auth.AuthService;
-import com.aurum.auth.InvalidCredentialsException;
-import com.aurum.domain.*;
+import com.aurum.auth.application.AuthService;
+import com.aurum.auth.exception.InvalidCredentialsException;
+import com.aurum.users.domain.Role;
+import com.aurum.users.domain.User;
+import com.aurum.users.repository.UserRepository;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

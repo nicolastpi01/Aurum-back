@@ -1,4 +1,4 @@
-package com.aurum.domain;
+package com.aurum.transfer.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;

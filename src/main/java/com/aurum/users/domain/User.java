@@ -1,4 +1,4 @@
-package com.aurum.domain;
+package com.aurum.users.domain;
 
 import jakarta.persistence.*;
 

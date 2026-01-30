@@ -1,4 +1,4 @@
-package com.aurum.domain;
+package com.aurum.accounts.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;

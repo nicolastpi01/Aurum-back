@@ -8,6 +8,9 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
+    
+    env:
+      SPRING_PROFILES_ACTIVE: test
 
     steps:
       - name: Checkout

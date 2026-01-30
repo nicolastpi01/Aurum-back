@@ -1,4 +1,4 @@
-package com.aurum.infrastructure.security;
+package com.aurum.config.security;
 
 
 import java.util.Base64;

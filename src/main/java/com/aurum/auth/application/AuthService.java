@@ -1,7 +1,9 @@
-package com.aurum.auth;
+package com.aurum.auth.application;
 
-import com.aurum.domain.User;
-import com.aurum.domain.UserRepository;
+import com.aurum.auth.exception.InvalidCredentialsException;
+import com.aurum.users.domain.User;
+import com.aurum.users.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
