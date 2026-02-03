@@ -1,12 +1,15 @@
 package com.aurum.auth.web;
 
 import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.aurum.auth.application.AuthService;
 import com.aurum.auth.dto.LoginRequest;
 import com.aurum.auth.dto.LoginResponse;
+import com.aurum.auth.dto.RegisterRequest;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -22,6 +25,12 @@ public class AuthController {
 	    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest req) {
 	        String token = authService.login(req.email(), req.password());
 	        return ResponseEntity.ok(new LoginResponse(token, "Bearer"));
+	    }
+	    
+	    @PostMapping("/register")
+	    public ResponseEntity<Void> register(@Valid @RequestBody RegisterRequest req) {
+	        authService.register(req);
+	        return ResponseEntity.status(HttpStatus.CREATED).build();
 	    }
 
 }
