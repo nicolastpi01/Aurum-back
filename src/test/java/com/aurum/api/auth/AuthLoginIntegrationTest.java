@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 class AuthLoginIntegrationTest {
@@ -60,7 +60,7 @@ class AuthLoginIntegrationTest {
 
         String token = om.readTree(json).get("accessToken").asText();
 
-        Jwt jwt = jwtDecoder.decode(token); // ✅ valida firma
+        Jwt jwt = jwtDecoder.decode(token); 
 
         assert jwt.getSubject().equals("nico@aurum.com");
         assert jwt.getClaimAsString("role").equals("USER");
