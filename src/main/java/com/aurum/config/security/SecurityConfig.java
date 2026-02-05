@@ -23,6 +23,7 @@ public class SecurityConfig {
             .sessionManagement(sm -> sm.sessionCreationPolicy(STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/accounts/**").authenticated()
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()

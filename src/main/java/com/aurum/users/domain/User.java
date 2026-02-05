@@ -14,16 +14,15 @@ public class User {
     private String mail;
     @Column(nullable = false, length = 255)
     private String password_hash;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private Role role;
-    
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Status status = Status.ACTIVE;
-    
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
-
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated_at;

@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
+import com.aurum.users.domain.Role;
 import com.aurum.users.domain.User;
 import com.aurum.users.repository.UserRepository;
 
@@ -55,6 +56,7 @@ public class SignInIntegrationTest {
         User u = new User();
         u.setMail("duplicate@aurum.com");
         u.setPassword_hash("hash");
+        u.setRole(Role.USER);
         userRepository.save(u);
 
         String json = """
