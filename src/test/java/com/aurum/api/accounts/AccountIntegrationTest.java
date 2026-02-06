@@ -24,7 +24,7 @@ public class AccountIntegrationTest {
 
 	
 	@Test
-	@Sql(scripts = "/com/aurum/api/accounts/setup-accounts.sql", 
+	@Sql(scripts = "/setup-accounts.sql", 
     executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM accounts; DELETE FROM users;", 
     executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
