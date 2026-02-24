@@ -1,4 +1,5 @@
 -- Limpieza
+DELETE FROM ledger_entries;
 DELETE FROM accounts;
 DELETE FROM users;
 
