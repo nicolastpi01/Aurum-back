@@ -1,13 +1,10 @@
 package com.aurum.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.aurum.accounts.domain.Account;
+import com.aurum.accounts.repository.AccountRepository;
 import com.aurum.auth.dto.AccountResponse;
-import com.aurum.users.repository.AccountRepository;
 
 @Service
 public class AccountService {

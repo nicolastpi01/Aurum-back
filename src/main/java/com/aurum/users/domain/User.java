@@ -39,6 +39,7 @@ public class User {
         updated_at = new Date();
     }
     
+    public void setId(long id) { this.id = id;}
     public Long getId() { return id; }
     public String getMail() { return mail; }
     public String getPassword_hash() { return password_hash; }

@@ -1,4 +1,4 @@
-package com.aurum.api.accounts;
+package com.aurum.service;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,10 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.aurum.accounts.domain.Account;
+import com.aurum.accounts.repository.AccountRepository;
 import com.aurum.auth.dto.AccountResponse;
 import com.aurum.service.AccountService;
 import com.aurum.users.domain.User;
-import com.aurum.users.repository.AccountRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest {

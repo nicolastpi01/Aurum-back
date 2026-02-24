@@ -1,4 +1,4 @@
-package com.aurum.users.repository;
+package com.aurum.accounts.repository;
 
 import java.util.List;
 

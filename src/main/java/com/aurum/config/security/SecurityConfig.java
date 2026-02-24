@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
             )
-            //.oauth2ResourceServer(oauth -> oauth.jwt(jwt -> {})) // ✅ valida JWT en requests futuras
+            .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> {})) // ✅ valida JWT en requests futuras
             .build();
     }
 

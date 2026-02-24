@@ -1,4 +1,4 @@
-package com.aurum.api;
+package com.aurum;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

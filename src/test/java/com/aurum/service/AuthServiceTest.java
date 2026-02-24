@@ -1,4 +1,4 @@
-package com.aurum.api.auth;
+package com.aurum.service;
 
 import com.aurum.auth.application.AuthService;
 import com.aurum.auth.dto.RegisterRequest;
