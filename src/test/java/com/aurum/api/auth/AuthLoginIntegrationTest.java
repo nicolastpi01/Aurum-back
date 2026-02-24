@@ -1,6 +1,8 @@
 package com.aurum.api.auth;
 
 
+import com.aurum.accounts.repository.AccountRepository;
+import com.aurum.accounts.repository.LedgerRepository;
 import com.aurum.users.domain.Role;
 import com.aurum.users.domain.Status;
 import com.aurum.users.domain.User;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -23,16 +26,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class AuthLoginIntegrationTest {
 	
 	@Autowired PasswordEncoder passwordEncoder;
     @Autowired MockMvc mvc;
     @Autowired ObjectMapper om;
     @Autowired UserRepository userRepository;
+    @Autowired AccountRepository accountRepository;
+    @Autowired LedgerRepository ledgerRepository;
     @Autowired JwtDecoder jwtDecoder;
 
     @BeforeEach
     void setup() {
+    	ledgerRepository.deleteAll();
+    	accountRepository.deleteAll();
         userRepository.deleteAll();
 
         User u = new User();

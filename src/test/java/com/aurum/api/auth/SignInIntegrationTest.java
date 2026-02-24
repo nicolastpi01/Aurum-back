@@ -5,15 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
+import com.aurum.accounts.repository.AccountRepository;
+import com.aurum.accounts.repository.LedgerRepository;
 import com.aurum.users.domain.Role;
 import com.aurum.users.domain.User;
 import com.aurum.users.repository.UserRepository;
@@ -21,6 +25,7 @@ import com.aurum.users.repository.UserRepository;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class SignInIntegrationTest {
 	
 	@Autowired
@@ -31,6 +36,19 @@ public class SignInIntegrationTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired 
+    private AccountRepository accountRepository;
+    
+    @Autowired 
+    private LedgerRepository ledgerRepository;
+    
+    @BeforeEach
+    void setup() {
+    	ledgerRepository.deleteAll();
+        accountRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
     @Test
     void register_success_persistsUserInDatabase() throws Exception {
