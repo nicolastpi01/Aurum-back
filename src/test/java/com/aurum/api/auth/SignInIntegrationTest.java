@@ -1,8 +1,10 @@
 package com.aurum.api.auth;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -70,7 +72,7 @@ public class SignInIntegrationTest {
     }
 
     @Test
-    void register_duplicateEmail_returns409() throws Exception {
+    void register_duplicateEmail_returns422() throws Exception {
         User u = new User();
         u.setMail("duplicate@aurum.com");
         u.setPassword_hash("hash");
@@ -87,7 +89,9 @@ public class SignInIntegrationTest {
         mockMvc.perform(post("/api/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isConflict()); 
+                .andExpect(status().isUnprocessableEntity())
+        		.andExpect(jsonPath("$.code").value("BUSINESS_RULE_VIOLATION")) 
+        		.andExpect(jsonPath("$.message", containsString("ya está registrado")));
     }
 
 }

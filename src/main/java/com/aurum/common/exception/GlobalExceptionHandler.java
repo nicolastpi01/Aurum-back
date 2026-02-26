@@ -10,31 +10,44 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.aurum.auth.exception.EmailAlreadyExistsException;
+import com.aurum.common.api.ApiError;
+import com.aurum.common.api.ApiErrorCode;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<String> handleConflict(EmailAlreadyExistsException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    public ResponseEntity<ApiError> handleConflict(EmailAlreadyExistsException ex) {
+		ApiError error = new ApiError(ApiErrorCode.BUSINESS_RULE_VIOLATION, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(f -> errors.put(f.getField(), f.getDefaultMessage()));
-        return ResponseEntity.badRequest().body(errors);
+    public ResponseEntity<ApiError> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, String> details = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(f -> details.put(f.getField(), f.getDefaultMessage()));
+        //return ResponseEntity.badRequest().body(errors);
+        ApiError error = new ApiError(ApiErrorCode.VALIDATION_ERROR, "Invalid request parameters", details);
+        return ResponseEntity.badRequest().body(error);
     }
 
-    // --- AGREGAMOS ESTO PARA LOS MOVIMIENTOS ---
+    // --- MOVIMIENTOS ---
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+    public ResponseEntity<ApiError> handleRuntimeException(RuntimeException ex) {
         // Si el error es de seguridad de cuenta, devolvemos 403 Forbidden
         if (ex.getMessage().contains("access denied") || ex.getMessage().contains("not found")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+        	
+        	ApiError error = new ApiError(
+                    ApiErrorCode.ACCESS_DENIED, 
+                    ex.getMessage()
+                );
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
         }
-        // Para cualquier otro error inesperado, devolvemos 500
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error inesperado");
+        ApiError error = new ApiError(
+                ApiErrorCode.INTERNAL_ERROR, 
+                "An unexpected error occurred on the server"
+            );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
 }
