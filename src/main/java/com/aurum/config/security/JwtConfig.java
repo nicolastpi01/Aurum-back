@@ -16,11 +16,12 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 @Configuration
 public class JwtConfig {
 	
-	 @Bean
-	  SecretKey jwtSecretKey(@Value("${aurum.security.jwt.secret}") String base64Secret) {
-	    byte[] secretBytes = Base64.getDecoder().decode(base64Secret);
+	@Bean
+	SecretKey jwtSecretKey(@Value("${aurum.security.jwt.secret}") String secret) {
+	    // Usamos getBytes() en lugar de Base64.getDecoder()
+	    byte[] secretBytes = secret.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 	    return new SecretKeySpec(secretBytes, "HmacSHA256");
-	  }
+	}
 
 	  @Bean
 	  JwtEncoder jwtEncoder(SecretKey jwtSecretKey) {
