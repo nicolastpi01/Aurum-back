@@ -40,7 +40,7 @@ class TransferServiceTest {
 
         TransferRequest request = new TransferRequest(sourceId, destId, amount, "Test transfer");
 
-        assertThrows(BusinessRuleException.class, () -> transferService.transfer(request));
+        assertThrows(BusinessRuleException.class, () -> transferService.transfer(request, "AHASHD123"));
         
         // Verificamos que nunca se llamó al ledger porque falló antes
         verify(ledgerService, never()).createMovement(any(Account.class), anyDouble(), anyString(), anyString());
@@ -66,7 +66,7 @@ class TransferServiceTest {
 
         TransferRequest request = new TransferRequest(sourceId, destId, amount, "Pago cena");
 
-        transferService.transfer(request);
+        transferService.transfer(request,"AHASHD123");
 
         // Assert
         // 1. Verificamos que se actualizaron los saldos en los objetos
