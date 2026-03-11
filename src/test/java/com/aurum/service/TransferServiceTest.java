@@ -40,25 +40,23 @@ class TransferServiceTest {
 
         TransferRequest request = new TransferRequest(sourceId, destId, amount, "Test transfer");
 
-        // Act & Assert
         assertThrows(BusinessRuleException.class, () -> transferService.transfer(request));
         
-        // Verificamos que NUNCA se llamó al ledger porque falló antes
-        verify(ledgerService, never()).createMovement(any(), any(), any(), any());
+        // Verificamos que nunca se llamó al ledger porque falló antes
+        verify(ledgerService, never()).createMovement(any(Account.class), anyDouble(), anyString(), anyString());
     }
     
     @Test
     @DisplayName("Should successfully transfer funds between two valid accounts")
     void transfer_Success_CreatesDebitAndCreditMovements() {
-        // Arrange
         Long sourceId = 1L;
         Long destId = 2L;
         double amount = 100.00;
         
         Account sourceAcc = new Account();
         sourceAcc.setId(sourceId);
-        sourceAcc.setBalance(500.00); // Saldo suficiente
-
+        sourceAcc.setBalance(500.00);
+        
         Account destAcc = new Account();
         destAcc.setId(destId);
         destAcc.setBalance(50.00);
@@ -68,30 +66,19 @@ class TransferServiceTest {
 
         TransferRequest request = new TransferRequest(sourceId, destId, amount, "Pago cena");
 
-        // Act
         transferService.transfer(request);
 
         // Assert
-        // 1. Verificamos que se actualizaron los saldos en los objetos (Ojo: el service debe hacer setBalance)
+        // 1. Verificamos que se actualizaron los saldos en los objetos
         assertThat(sourceAcc.getBalance()).isEqualTo(400.00);
         assertThat(destAcc.getBalance()).isEqualTo(150.00);
 
         // 2. Verificamos que se llamó al LedgerService para registrar AMBOS movimientos
         // Verificamos el Débito (Salida de dinero)
-        verify(ledgerService, times(1)).createMovement(
-            eq(sourceAcc),          // Ahora pasamos el objeto Account
-            eq(amount),             // El monto (positivo, el tipo define que es resta)
-            eq("DEBIT"),            // El tipo de entrada
-            anyString()             // La descripción
-        );
+        verify(ledgerService, times(1)).createMovement(eq(sourceAcc), eq(amount), eq("DEBIT"), anyString());
 
         // Verificamos el Crédito (Entrada de dinero)
-        verify(ledgerService, times(1)).createMovement(
-            eq(destAcc),            // Ahora pasamos el objeto Account
-            eq(amount),             // El monto
-            eq("CREDIT"),           // El tipo de entrada
-            anyString()             // La descripción
-        );
+        verify(ledgerService, times(1)).createMovement(eq(destAcc), eq(amount), eq("CREDIT"), anyString());
         
         // 3. Verificamos que se guardaron los cambios en las cuentas
         verify(accountRepository, times(1)).save(sourceAcc);

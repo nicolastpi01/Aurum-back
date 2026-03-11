@@ -34,8 +34,6 @@ public class TransferService {
         accountRepository.save(source);
         accountRepository.save(destination);
 
-      
-        
         // 3. Grabar los dos asientos contables
         ledgerService.createMovement(source, request.amount(), "DEBIT", "DEBIT" + "Transfer to ID: " + destination.getId());
         ledgerService.createMovement(destination, request.amount(), "CREDIT", "CREDIT" + "Transfer from ID: " + source.getId());
