@@ -30,6 +30,15 @@ public class GlobalExceptionHandler {
         ApiError error = new ApiError(ApiErrorCode.VALIDATION_ERROR, "Invalid request parameters", details);
         return ResponseEntity.badRequest().body(error);
     }
+    
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<ApiError> handleBusinessRule(BusinessRuleException ex) {
+        ApiError error = new ApiError(
+            ApiErrorCode.BUSINESS_RULE_VIOLATION, 
+            ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
+    }
 
     // --- MOVIMIENTOS ---
     @ExceptionHandler(RuntimeException.class)

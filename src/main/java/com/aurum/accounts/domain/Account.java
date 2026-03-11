@@ -15,7 +15,6 @@ import java.util.Date;
 import com.aurum.users.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//import javax.management.relation.Role;
 
 @Entity
 @Table(name = "accounts")

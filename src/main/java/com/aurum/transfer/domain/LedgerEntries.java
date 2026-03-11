@@ -38,6 +38,7 @@ public class LedgerEntries {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public void setAccount(Account account) { this.account = account; }
     public Account getAccount() { return account; }
     public String getEntryType() { return entryType; }
