@@ -3,7 +3,10 @@ package com.aurum.service;
 import com.aurum.accounts.domain.Account;
 import com.aurum.accounts.repository.AccountRepository;
 import com.aurum.common.exception.BusinessRuleException; 
-import com.aurum.transfer.dto.TransferRequest; 
+import com.aurum.transfer.dto.TransferRequest;
+import com.aurum.transfer.repository.TransferRepository;
+import com.aurum.users.domain.User;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +23,7 @@ class TransferServiceTest {
 
     @Mock private AccountRepository accountRepository;
     @Mock private LedgerService ledgerService;
+    @Mock private TransferRepository transferRepository;
     @InjectMocks private TransferService transferService;
 
     @Test
@@ -35,6 +39,7 @@ class TransferServiceTest {
         double initialBalance = 50.00;
         sourceAcc.setBalance(initialBalance);
 
+        when(transferRepository.findByIdempotencyKey(anyString())).thenReturn(Optional.empty());
         when(accountRepository.findById(sourceId)).thenReturn(Optional.of(sourceAcc));
         when(accountRepository.findById(destId)).thenReturn(Optional.of(new Account()));
 
@@ -53,14 +58,19 @@ class TransferServiceTest {
         Long destId = 2L;
         double amount = 100.00;
         
+        User mockUser = new User();
+        mockUser.setId(10L);
+        
         Account sourceAcc = new Account();
         sourceAcc.setId(sourceId);
         sourceAcc.setBalance(500.00);
+        sourceAcc.setUser(mockUser);
         
         Account destAcc = new Account();
         destAcc.setId(destId);
         destAcc.setBalance(50.00);
 
+        when(transferRepository.findByIdempotencyKey(anyString())).thenReturn(Optional.empty());
         when(accountRepository.findById(sourceId)).thenReturn(Optional.of(sourceAcc));
         when(accountRepository.findById(destId)).thenReturn(Optional.of(destAcc));
 

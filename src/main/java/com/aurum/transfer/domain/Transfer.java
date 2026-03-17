@@ -11,7 +11,7 @@ public class Transfer {
     //ForeignKey
     private String external_id;
     //ForeignKey
-    private String idempotency_key;
+    private String idempotencyKey;
     private long user_id;
 
     //ForeignKey
@@ -30,11 +30,11 @@ public class Transfer {
     public long getId() {
     	return id;
     }
-	public String getIdempotency_key() {
-		return idempotency_key;
+	public String getIdempotencyKey() {
+		return idempotencyKey;
 	}
-	public void setIdempotency_key(String idempotency_key) {
-		this.idempotency_key = idempotency_key;
+	public void setIdempotencyKey(String idempotencyKey) {
+		this.idempotencyKey = idempotencyKey;
 	}
 	public long getUser_id() {
 		return user_id;

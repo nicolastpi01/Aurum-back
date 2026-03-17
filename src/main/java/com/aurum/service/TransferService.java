@@ -50,7 +50,7 @@ public class TransferService {
 
         // 6. Registro de la Transferencia (seteando todos los campos)
         Transfer transfer = new Transfer();
-        transfer.setIdempotency_key(idempotencyKey);
+        transfer.setIdempotencyKey(idempotencyKey);
         transfer.setFrom_account_id(source.getId());
         transfer.setTo_account_id(destination.getId());
         transfer.setAmount(request.amount());

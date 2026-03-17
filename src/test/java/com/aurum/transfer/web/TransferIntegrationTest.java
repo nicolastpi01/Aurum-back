@@ -78,6 +78,7 @@ public class TransferIntegrationTest {
         TransferRequest request = new TransferRequest(sourceId, destId, 200.0, "Test Integration");
 
         mockMvc.perform(post("/api/v1/transfers")
+        		.header("X-Idempotency-Key", "un-uuid-aleatorio")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -101,6 +102,7 @@ public class TransferIntegrationTest {
         TransferRequest request = new TransferRequest(sourceId, destId, 5000.0, "Fallo fondos");
 
         mockMvc.perform(post("/api/v1/transfers")
+        		.header("X-Idempotency-Key", "un-uuid-aleatorio")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isUnprocessableEntity());
