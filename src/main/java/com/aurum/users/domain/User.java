@@ -50,4 +50,6 @@ public class User {
     public void setPassword_hash(String password_hash) { this.password_hash = password_hash; }
     public void setRole(Role role) { this.role = role; }
     public void setStatus(Status status) { this.status = status; }
+
+	
 }
