@@ -2,7 +2,6 @@ package com.aurum.transfer.web;
 
 import com.aurum.service.TransferService;
 import com.aurum.transfer.dto.TransferRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +15,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/transfers")
 public class TransferController {
 
-    @Autowired
-    private TransferService transferService;
+    private final TransferService transferService;
+
+    public TransferController(TransferService transferService) {
+        this.transferService = transferService;
+    }
 
     @PostMapping
     public ResponseEntity<Void> createTransfer(@RequestHeader("X-Idempotency-Key") String idempotencyKey, @Valid @RequestBody TransferRequest request) {

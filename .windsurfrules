@@ -1,0 +1,6 @@
+# Reglas Spring Boot - Aurum Back
+- Stack: Java 21, Spring Boot 3.4+, Maven.
+- Arquitectura: Controller -> Service -> Repository -> Entity.
+- Seguridad: JWT con Spring Security.
+- DB: H2 para dev, veremos qué usar para prod.
+- Regla: Usar siempre constructor injection en lugar de @Autowired.

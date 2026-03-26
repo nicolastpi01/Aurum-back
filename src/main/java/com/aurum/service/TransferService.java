@@ -2,7 +2,6 @@ package com.aurum.service;
 
 import java.util.Date;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.aurum.accounts.domain.Account;
@@ -15,9 +14,15 @@ import com.aurum.transfer.repository.TransferRepository;
 @Service
 public class TransferService {
 
-    @Autowired private AccountRepository accountRepository;
-    @Autowired private LedgerService ledgerService;
-    @Autowired private TransferRepository transferRepository;
+    private final AccountRepository accountRepository;
+    private final LedgerService ledgerService;
+    private final TransferRepository transferRepository;
+
+    public TransferService(AccountRepository accountRepository, LedgerService ledgerService, TransferRepository transferRepository) {
+        this.accountRepository = accountRepository;
+        this.ledgerService = ledgerService;
+        this.transferRepository = transferRepository;
+    }
 
     @Transactional 
     public void transfer(TransferRequest request, String idempotencyKey) {
